@@ -10,6 +10,9 @@ const staticFiles = [
     "/js/main.js",
     "/js/restaurant_info.js",
 ];
+for (var i=1;i<=10;i+=1){
+    staticFiles.push('/img/'+i+'.jpg');
+}
 
 self.addEventListener('install', function (event) {
     event.waitUntil(
