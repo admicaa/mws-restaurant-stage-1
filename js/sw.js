@@ -1,12 +1,14 @@
 const chacheVersion = "restaurant-cache-1";
+const imagesCacheVersion = 'images-cache-1'
 const staticFiles = [
     "/",
-    "index.html",
-    "restaurant.html",
-    "css/styles.css",
-    "data/restaurants.json",
-    "js/dbhelper.js",
-    "js/restaurant_info.js",
+    "/index.html",
+    "/restaurant.html",
+    "/css/styles.css",
+    "/data/restaurants.json",
+    "/js/dbhelper.js",
+    "/js/main.js",
+    "/js/restaurant_info.js",
 ];
 
 self.addEventListener('install', function (event) {
@@ -22,7 +24,7 @@ self.addEventListener('activate', function (event) {
         caches.keys().then(function (restaurantCaches) {
             return Promise.all(
                 restaurantCaches.filter(function (restaurantCache) {
-                    return restaurantCache != chacheVersion;
+                    return (restaurantCache !== chacheVersion && restaurantCache !== imagesCacheVersion);
                 }).map(function (restaurantCache) {
                     return caches.delete(restaurantCache);
                 })
@@ -46,7 +48,7 @@ self.addEventListener('fetch', function (event) {
                     }
 
                     var responseToCache = response.clone();
-                    caches.open(chacheVersion)
+                    caches.open(imagesCacheVersion)
                         .then(function (cache) {
                             cache.put(event.request, responseToCache);
                         });
